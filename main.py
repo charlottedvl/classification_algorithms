@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_iris
 
-from knn.knn import knn, knn_sklearn
-from knn.knn_error import knn_error
+from k_nearest_neighbors.knn import knn, knn_sklearn
+from k_nearest_neighbors.knn_error import knn_error
 
 
 # Load dataset
