@@ -1,10 +1,8 @@
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_iris
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import cross_val_score, LeaveOneOut
 
-from knn import knn, knn_sklearn
-from knn_error import knn_error
+from knn.knn import knn, knn_sklearn
+from knn.knn_error import knn_error
 
 
 # Load dataset
