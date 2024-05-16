@@ -1,4 +1,6 @@
+import numpy as np
 from numpy import unique, where, linalg, mean
+from sklearn import naive_bayes
 
 
 def nbc(x, y):
@@ -43,3 +45,22 @@ def nbc(x, y):
         # Add the prediction
         y_predicted.append(predicted_class)
     return y_predicted
+
+
+def nbc_sklearn(x, y):
+    nb = naive_bayes.GaussianNB()
+    y_prediction_list = []
+    for i in range(len(x)):
+        training_x = np.delete(x, i, axis=0)
+        training_y = np.delete(y, i)
+
+        # Reshape as a row so we have the same dimension
+        test_data = [x[i]]
+
+        nb.fit(training_x, training_y)
+        y_pred = nb.predict(test_data)
+
+        y_prediction_list.append(y_pred[0])
+    return y_prediction_list
+
+
