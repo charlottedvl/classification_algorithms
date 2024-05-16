@@ -1,9 +1,10 @@
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_iris
+from numpy import unique
 
 from k_nearest_neighbors.knn import knn, knn_sklearn
 from k_nearest_neighbors.knn_error import knn_error
-
+from naive_bayesian_classifier.nbc import nbc
 
 # Load dataset
 iris = load_iris()
@@ -35,3 +36,6 @@ plt.title('Error Percentage for K in range(1, 51)')
 plt.xlabel('K')
 plt.ylabel('Error Percentage')
 plt.show()
+
+ypred = nbc(X, Y)
+knn_error(ypred, Y)
