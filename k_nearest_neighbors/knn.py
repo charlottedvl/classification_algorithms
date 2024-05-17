@@ -1,32 +1,23 @@
-from numpy import unique, delete, sum
-from sklearn.metrics import pairwise_distances_argmin
+from statistics import mode
+
+from numpy import unique, delete, sum, argsort, shape
+from sklearn.metrics import pairwise_distances_argmin, pairwise_distances
 from sklearn.model_selection import LeaveOneOut, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 
 
 def knn(x, y, k):
     y_predicted = []
-    # For each element in x, we delete the element and the label corresponding in y
-    # in order to achieve cross validation of leave one type
-    for i in range(len(x)):
-        training_x = delete(x, i, axis=0)
-        training_y = delete(y, i)
+    # Find the nearest neighbor of all dataset and sort the first k elements
+    nearest_neighbor = pairwise_distances(x, x)
+    arg = argsort(nearest_neighbor)[:, 1:(k+1)] # start at 1 because 0 is the data itself
 
-        # Reshape as a row so we have the same dimension
-        x_i = x[i].reshape(1, -1)
+    # Affect the label
+    predictions = y[arg]
 
-        # Find the nearest neighbor of the x[i] element inside the training set
-        nearest_neighbor = pairwise_distances_argmin(x_i, training_x)
-        # Affect the label
-        predictions = training_y[nearest_neighbor[0:k]]
-        prediction = None
-        count = 0
-        for one_class in unique(predictions):
-            new_count = sum(predictions == one_class)
-            if count < new_count:
-                count = new_count
-                prediction = one_class
-        # Add the prediction to the list y_predicted
+    for i in range(len(predictions)):
+        # Find the mode
+        prediction = mode(predictions[i])
         y_predicted.append(prediction)
     return y_predicted
 

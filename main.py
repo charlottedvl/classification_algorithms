@@ -10,11 +10,25 @@ iris = load_iris()
 X = iris.data
 Y = iris.target
 
-# KNN prediction
-Ypred = knn(X, Y, 20)
 
-# Error percentage
-knn_error(Ypred, Y)
+errors = []
+# Iterate through different value of k
+for k in range(1, 21):
+    print(k)
+    # KNN prediction
+    Ypred = knn(X, Y, k)
+
+    # Error percentage
+    errors.append(knn_error(Ypred, Y))
+
+# Plot the results
+plt.plot(range(1, 21), errors, color='blue', linestyle='dashed',
+    marker='o', markerfacecolor='red', markersize=10)
+plt.title('Error Percentage for K in range(1, 21)')
+plt.xlabel('K')
+plt.ylabel('Error Percentage')
+plt.show()
+
 
 # Use sklearn library
 average_errors = []
@@ -44,4 +58,3 @@ knn_error(y_pred_sklearn, Y)
 
 y_pred_gauss = nbc_gaussian_distribution(X, Y)
 knn_error(y_pred_gauss, Y)
-
